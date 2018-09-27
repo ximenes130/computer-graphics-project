@@ -3,7 +3,7 @@
 ### Integrantes
 - Ana Luiza
 - Luiz Ximenes
-- Carlo
+- Carlos Gonçalves
 
 ### Requisitos
 A definir...
