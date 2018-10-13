@@ -5,7 +5,9 @@
  */
 package criapoligono.controllers;
 
+import criapoligono.models.Polygon;
 import criapoligono.views.EditorView;
+import java.util.Vector;
 
 /**
  *
@@ -13,6 +15,8 @@ import criapoligono.views.EditorView;
  */
 public class PoligonEditor {
     private EditorView editorView;
+    private Vector<Polygon> polygons;
+    //    private Scenes scenes; // TODO: Estudar melhor 
     public PoligonEditor() {
         this.editorView = new EditorView();
     }
