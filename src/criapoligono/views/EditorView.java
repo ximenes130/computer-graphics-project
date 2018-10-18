@@ -9,10 +9,13 @@ import com.jogamp.opengl.awt.GLCanvas;
 import criapoligono.models.Color;
 import criapoligono.models.Polygon;
 import criapoligono.models.Vertex;
+import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.util.Vector;
+import javax.swing.JButton;
 
 import javax.swing.JFrame;
+import javax.swing.JToolBar;
 
 /**
  *  View responsavel pela janela de edição de poligonos
@@ -40,6 +43,22 @@ public class EditorView implements GLEventListener {
 
         // Adicionando o canvas no frame
         windows.getContentPane().add(glcanvas);
+        
+        // Inicializando toolbar
+        JToolBar toolbar = new JToolBar();
+        toolbar.setRollover(true);
+        toolbar.setAutoscrolls(true);
+        toolbar.add(new JButton("Selecionar"));
+        toolbar.add(new JButton("Adicionar"));
+        toolbar.addSeparator();
+        toolbar.add(new JButton("Mudar Cor"));
+        toolbar.add(new JButton("Transladar"));
+        toolbar.add(new JButton("Redimensionar"));
+        toolbar.add(new JButton("Rotacionar"));
+        toolbar.addSeparator();
+        toolbar.add(new JButton("Voltar"));
+        toolbar.add(new JButton("Avançar"));
+        windows.getContentPane().add(toolbar, BorderLayout.NORTH);
         
         // Configurando o frame
         windows.setSize( 800, 600 );
