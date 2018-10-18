@@ -5,6 +5,8 @@
  */
 package criapoligono.models;
 
+import com.jogamp.opengl.GL2;
+
 /**
  *
  * @author ximenes
@@ -15,12 +17,17 @@ public class Color {
     private float green;
 
     public Color() {
+        this(1f, 1f, 1f);
     }
     
     public Color(float red, float blue, float green) {
         this.red = red;
         this.blue = blue;
         this.green = green;
+    }
+    
+    public void paint(GL2 gl){
+        gl.glColor3f(red, green, blue);
     }
     
     public void setAll(float red, float blue, float green) {

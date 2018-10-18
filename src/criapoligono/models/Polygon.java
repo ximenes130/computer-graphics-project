@@ -5,6 +5,7 @@
  */
 package criapoligono.models;
 
+import com.jogamp.opengl.GL2;
 import java.util.Vector;
 
 /**
@@ -18,6 +19,23 @@ public class Polygon {
     public Polygon() {
         this.vertexes = new Vector<>();
         this.color = new Color();
+    }
+    
+    public void draw(GL2 gl){
+        System.out.println("# Desenhando poligono");
+        // Iniciando desenho do poligono
+        gl.glBegin(GL2.GL_POLYGON);
+        
+        // Definindo cor do desenho
+        color.paint(gl);
+
+        // Definindo vertices do poligono
+        for(Vertex vertex : vertexes){
+            vertex.draw(gl);
+        }
+
+        // Finalizando desenho
+        gl.glEnd();
     }
     
     public Vector<Vertex> addVertex(Vertex vertex){

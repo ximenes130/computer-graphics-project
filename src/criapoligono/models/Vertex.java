@@ -5,6 +5,8 @@
  */
 package criapoligono.models;
 
+import com.jogamp.opengl.GL2;
+
 /**
  *
  * @author ximenes
@@ -20,6 +22,11 @@ public class Vertex {
     public Vertex(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+    
+    public void draw(GL2 gl){
+        System.out.println("X: " + x + "\tY: " + y);
+        gl.glVertex2f(x,y);
     }
 
     public float getX() {

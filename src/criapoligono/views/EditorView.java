@@ -6,7 +6,9 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
+import criapoligono.models.Color;
 import criapoligono.models.Polygon;
+import criapoligono.models.Vertex;
 import java.awt.Frame;
 import java.util.Vector;
 
@@ -23,6 +25,7 @@ public class EditorView implements GLEventListener {
     //    private Scenes scenes; // TODO: Estudar melhor 
             
     public EditorView() {
+        this.polygons = new Vector<>();
         // Definido GL2 como perfil OpenGL
         final GLProfile profile = GLProfile.get(GLProfile.GL2);
         GLCapabilities capabilities = new GLCapabilities(profile);
@@ -47,21 +50,12 @@ public class EditorView implements GLEventListener {
     
     @Override
     public void display(GLAutoDrawable drawable) {
+        System.out.println("--- public void display ---");
         final GL2 gl = drawable.getGL().getGL2();
 
-        // Desenhando um tiangulo
-        gl.glBegin(GL2.GL_TRIANGLES);
-        
-        // Definindo cor do desenho
-        gl.glColor3f( 0f,1f,0f );
-
-        // Definindo vertices do triangulo
-        gl.glVertex3f(0.5f,0.7f,0.0f);       // Topo
-        gl.glVertex3f(-0.2f,-0.50f,0.0f);    // Inferior esquerdo
-        gl.glVertex3f(0.5f,-0.5f,0.0f);      // Inferior direito
-
-        // Finalizando desenho da forma
-        gl.glEnd();
+        for(Polygon polygon : polygons){
+            polygon.draw(gl);
+        }
     }
 
     @Override
