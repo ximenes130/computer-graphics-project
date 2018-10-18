@@ -5,7 +5,7 @@
  */
 package criapoligono;
 
-import criapoligono.controllers.PoligonEditor;
+import criapoligono.views.EditorView;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.println("Inicializando programa");
-        new PoligonEditor();
+        EditorView editorView = new EditorView();
     }
     
 }

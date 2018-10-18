@@ -6,7 +6,9 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
+import criapoligono.models.Polygon;
 import java.awt.Frame;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -17,6 +19,8 @@ import javax.swing.JFrame;
 public class EditorView implements GLEventListener {
     private JFrame windows;
     private GLCanvas glcanvas;
+    private Vector<Polygon> polygons;
+    //    private Scenes scenes; // TODO: Estudar melhor 
             
     public EditorView() {
         // Definido GL2 como perfil OpenGL
