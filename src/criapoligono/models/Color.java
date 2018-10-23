@@ -15,6 +15,19 @@ public class Color {
     private float red;
     private float blue;
     private float green;
+    
+    public Color(java.awt.Color color){
+        this(
+            color.getRed() / 255f,
+            color.getGreen() / 255f,
+            color.getBlue() / 255f
+        );
+    }
+    
+    @Override
+    public String toString(){
+        return "Color: R="+ this.red +" G="+ this.green +" B=" + this.blue;
+    }
 
     public Color() {
         this(1f, 1f, 1f);
