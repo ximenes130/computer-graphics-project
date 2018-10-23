@@ -20,7 +20,7 @@ public class Color {
         this(1f, 1f, 1f);
     }
     
-    public Color(float red, float blue, float green) {
+    public Color(float red, float green, float blue) {
         this.red = red;
         this.blue = blue;
         this.green = green;
