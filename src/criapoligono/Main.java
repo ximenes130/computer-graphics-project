@@ -5,7 +5,9 @@
  */
 package criapoligono;
 
+import criapoligono.models.Vertex;
 import criapoligono.views.EditorView;
+import java.util.Arrays;
 
 /**
  *
@@ -19,6 +21,14 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Inicializando programa");
         EditorView editorView = new EditorView();
+//        Vertex v = new Vertex(1, 2);
+//        Float[][] f = new Float[2][2];
+//        f[0][0] = 1f;
+//        f[0][1] = 0f;
+//        f[1][0] = 0f;
+//        f[1][1] = 1f;
+//        v.times(f);
+//        System.out.println(Arrays.toString(v.toArray()));
     }
     
 }
