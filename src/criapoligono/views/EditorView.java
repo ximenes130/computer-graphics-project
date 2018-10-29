@@ -10,7 +10,6 @@ import criapoligono.models.Color;
 import criapoligono.models.Polygon;
 import criapoligono.models.Vertex;
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -18,14 +17,14 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+import javax.swing.event.MouseInputListener;
 
 /**
  *  View responsavel pela janela de edição de poligonos
  * @author ximenes
  */
-public class EditorView implements GLEventListener {
+public class EditorView implements GLEventListener, MouseInputListener, ActionListener {
     private JFrame windows;
     private GLCanvas glcanvas;
     private Vector<Polygon> polygons;
@@ -39,17 +38,15 @@ public class EditorView implements GLEventListener {
 
         // Criando o canvas
         glcanvas = new GLCanvas(capabilities);
-        glcanvas.addGLEventListener(this); 
-        glcanvas.setSize(400, 400);
+        glcanvas.addGLEventListener(this);
+        glcanvas.addMouseListener(this);
+        glcanvas.setSize(100, 100);
 
         // Criando frame (Janela)
         windows = new JFrame (" Basic Frame");
 
         // Adicionando o canvas no frame
         windows.getContentPane().add(glcanvas);
-        
-        // Init button event listener
-        EditorButtonClickListener eventListener = new EditorButtonClickListener();
         
         // Inicializando toolbar
         JToolBar toolbar = new JToolBar();
@@ -63,7 +60,7 @@ public class EditorView implements GLEventListener {
         toolbar.addSeparator();
         
         JButton changeColorButton = new JButton("Mudar Cor");
-        changeColorButton.addActionListener(eventListener);
+        changeColorButton.addActionListener(this);
         toolbar.add(changeColorButton);
         
         toolbar.add(new JButton("Transladar"));
@@ -98,6 +95,7 @@ public class EditorView implements GLEventListener {
         for(Polygon polygon : polygons){
             polygon.draw(gl);
         }
+        gl.glFlush();
     }
 
     @Override
@@ -119,18 +117,50 @@ public class EditorView implements GLEventListener {
     // ###### Event Listener ######
     // ############################
     
-    public class EditorButtonClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            switch(e.getActionCommand()){
-                case "Mudar Cor":
-                    java.awt.Color color;
-                    color = JColorChooser.showDialog(null, "JColorChooser Sample", windows.getBackground());
-                    polygons.firstElement().setColor(new Color(color));
-                    System.out.println(polygons.firstElement().getColor().toString());
-                    break;
-            }
-            glcanvas.repaint();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch(e.getActionCommand()){
+            case "Mudar Cor":
+                java.awt.Color color;
+                color = JColorChooser.showDialog(null, "JColorChooser Sample", windows.getBackground());
+                polygons.firstElement().setColor(new Color(color));
+                System.out.println(polygons.firstElement().getColor().toString());
+                break;
         }
+        glcanvas.repaint();
+    }
+
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        System.out.println("Click Event: X="+ e.getX() +" Y="+ e.getY());
+        System.out.println(glcanvas.getHeight());
+        float newX =  ((float) e.getX() / glcanvas.getWidth())       *  2 - 1;
+        float newY = (((float) e.getY() / glcanvas.getHeight()) - 1) * -2 - 1;
+        polygons.firstElement().addVertex(new Vertex(newX, newY));
+        glcanvas.repaint();
+    }
+
+    @Override
+    public void mousePressed(java.awt.event.MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(java.awt.event.MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(java.awt.event.MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(java.awt.event.MouseEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(java.awt.event.MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(java.awt.event.MouseEvent e) {
     }
 }
