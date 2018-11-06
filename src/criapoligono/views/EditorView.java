@@ -31,6 +31,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
     private JFrame windows;
     private GLCanvas glcanvas;
     private Vector<Polygon> polygons;
+    private Polygon selectedPolygon;
     private JToolBar toolbar;
     private String currentAction;
     //    private Scenes scenes; // TODO: Estudar melhor 
@@ -96,6 +97,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         p.addVertex(new Vertex(0.2f, -0.2f));
         p.addVertex(new Vertex(0.2f, -0.7f));
         this.polygons.add(p);
+        this.selectedPolygon = p;
         
         // Configurando o frame
         windows.setSize( 800, 600 );
@@ -110,7 +112,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         final GL2 gl = drawable.getGL().getGL2();
 
         for(Polygon polygon : polygons){
-            polygon.draw(gl);
+            polygon.draw(gl, polygon == selectedPolygon);
         }
         gl.glFlush();
     }
@@ -122,7 +124,8 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
 
     @Override
     public void init(GLAutoDrawable drawable) {
-      // method body
+      final GL2 gl = drawable.getGL().getGL2();
+      gl.glClearColor(1, 1, 1, 1);
     }
 
     @Override

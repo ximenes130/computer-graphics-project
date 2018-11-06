@@ -21,7 +21,7 @@ public class Polygon {
         this.color = new Color();
     }
     
-    public void draw(GL2 gl){
+    public void draw(GL2 gl, boolean selected){
         System.out.println("# Desenhando poligono");
         // Iniciando desenho do poligono
         gl.glBegin(GL2.GL_POLYGON);
@@ -36,6 +36,16 @@ public class Polygon {
 
         // Finalizando desenho
         gl.glEnd();
+        
+        // Desenhando borda
+        if(selected){
+            gl.glBegin(GL2.GL_LINE_LOOP);
+            gl.glColor3f(0f, 0f, 0f);
+            for(Vertex vertex : vertexes){
+                vertex.draw(gl);
+            }
+            gl.glEnd();
+        }
     }
     
     public Vector<Vertex> addVertex(Vertex vertex){
