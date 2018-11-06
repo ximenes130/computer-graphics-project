@@ -10,13 +10,16 @@ import criapoligono.models.Color;
 import criapoligono.models.Polygon;
 import criapoligono.models.Vertex;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
 import javax.swing.JFrame;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.event.MouseInputListener;
 
@@ -28,6 +31,8 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
     private JFrame windows;
     private GLCanvas glcanvas;
     private Vector<Polygon> polygons;
+    private JToolBar toolbar;
+    private String currentAction;
     //    private Scenes scenes; // TODO: Estudar melhor 
             
     public EditorView() {
@@ -49,23 +54,35 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         windows.getContentPane().add(glcanvas);
         
         // Inicializando toolbar
-        JToolBar toolbar = new JToolBar();
+        this.toolbar = new JToolBar();
         toolbar.setRollover(true);
         toolbar.setAutoscrolls(true);
-        
-        JButton selectPolygonButton = new JButton("Selecionar");
+
+        JToggleButton selectPolygonButton = new JToggleButton("Selecionar");
+        selectPolygonButton.addActionListener(this);
         toolbar.add(selectPolygonButton);
         
-        toolbar.add(new JButton("Adicionar"));
+        JToggleButton addPolygonButton = new JToggleButton("Adicionar");
+        addPolygonButton.addActionListener(this);
+        toolbar.add(addPolygonButton);
         toolbar.addSeparator();
         
         JButton changeColorButton = new JButton("Mudar Cor");
         changeColorButton.addActionListener(this);
         toolbar.add(changeColorButton);
         
-        toolbar.add(new JButton("Transladar"));
-        toolbar.add(new JButton("Redimensionar"));
-        toolbar.add(new JButton("Rotacionar"));
+        JToggleButton movePolygonButton = new JToggleButton("Transladar");
+        movePolygonButton.addActionListener(this);
+        toolbar.add(movePolygonButton);
+        
+        JToggleButton resizePolygonButton = new JToggleButton("Redimensionar");
+        resizePolygonButton.addActionListener(this);
+        toolbar.add(resizePolygonButton);
+        
+        JToggleButton rotatePolygonButton = new JToggleButton("Rotacionar");
+        rotatePolygonButton.addActionListener(this);
+        toolbar.add(rotatePolygonButton);
+        
         toolbar.addSeparator();
         toolbar.add(new JButton("Voltar"));
         toolbar.add(new JButton("Avançar"));
@@ -113,6 +130,26 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
       // method body
     }
     
+    private void untoggleButtons(){
+        for(Component component : toolbar.getComponents()){
+            if(component.getClass().toString().contains("javax.swing.JToggleButton")){
+                JToggleButton toggleButton = (JToggleButton) component;
+                if(!toggleButton.getActionCommand().equals(currentAction)){
+                    toggleButton.getModel().setPressed(false);
+                    toggleButton.setSelected(false);
+                }else{
+                    toggleButton.getModel().setPressed(true);
+                    toggleButton.setSelected(true);
+                }
+            }
+        }
+    }
+    
+    private void setCurrentAction(String actionCommand){
+        this.currentAction = actionCommand;
+        untoggleButtons();
+    }
+    
     // ############################
     // ###### Event Listener ######
     // ############################
@@ -125,6 +162,21 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
                 color = JColorChooser.showDialog(null, "JColorChooser Sample", windows.getBackground());
                 polygons.firstElement().setColor(new Color(color));
                 System.out.println(polygons.firstElement().getColor().toString());
+                break;
+            case "Selecionar":
+                setCurrentAction("Selecionar");
+                break;
+            case "Adicionar":
+                setCurrentAction("Adicionar");
+                break;
+            case "Transladar":
+                setCurrentAction("Transladar");
+                break;
+            case "Redimensionar":
+                setCurrentAction("Redimensionar");
+                break;
+            case "Rotacionar":
+                setCurrentAction("Rotacionar");
                 break;
         }
         glcanvas.repaint();
