@@ -39,13 +39,38 @@ public class Polygon {
         
         // Desenhando borda
         if(selected){
-            gl.glBegin(GL2.GL_LINE_LOOP);
-            gl.glColor3f(0f, 0f, 0f);
-            for(Vertex vertex : vertexes){
-                vertex.draw(gl);
-            }
-            gl.glEnd();
+            getBBox().draw(gl);
         }
+    }
+    
+    public boolean isIn(Vertex point){
+        return false;
+    }
+    
+    public BBox getBBox(){
+        float minX = 0;
+        float maxX = 0;
+        float minY = 0;
+        float maxY = 0;
+        
+        for(Vertex v : vertexes){
+            if(v.getX() < minX)
+                minX = v.getX();
+            if(v.getX() > maxX)
+                maxX = v.getX();
+            if(v.getY() < minY)
+                minY = v.getY();
+            if(v.getY() > maxY)
+                maxY = v.getY();
+        }
+        
+        BBox resul = new BBox();
+        resul.setMaxX(maxX);
+        resul.setMinX(minX);
+        resul.setMaxY(maxY);
+        resul.setMinY(minY);
+        
+        return resul;
     }
     
     public Vector<Vertex> addVertex(Vertex vertex){
