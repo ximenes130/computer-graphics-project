@@ -44,7 +44,7 @@ public class Polygon {
     }
     
     public boolean isIn(Vertex point){
-        return false;
+        return getBBox().isIn(point);
     }
     
     public BBox getBBox(){

@@ -35,6 +35,18 @@ public class BBox {
         
         gl.glEnd();
     }
+    
+    public boolean isIn(Vertex point){
+        if(point.getX() > getMaxX())
+            return false;
+        if(point.getY() > getMaxY())
+            return false;
+        if(point.getX() < getMinX())
+            return false;
+        if(point.getY() < getMinY())
+            return false;
+        return true;
+    }
 
     public float getMinX() {
         return minX;
