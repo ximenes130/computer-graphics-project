@@ -133,6 +133,12 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
       // method body
     }
     
+    private Vertex getCanvasPoint(float x, float y){
+        float newX =  ((float) x / glcanvas.getWidth())       *  2 - 1;
+        float newY = (((float) y / glcanvas.getHeight()) - 1) * -2 - 1;
+        return new Vertex(newX, newY);
+    }
+    
     private void untoggleButtons(){
         for(Component component : toolbar.getComponents()){
             if(component.getClass().toString().contains("javax.swing.JToggleButton")){
@@ -187,11 +193,17 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
 
     @Override
     public void mouseClicked(java.awt.event.MouseEvent e) {
-        System.out.println("Click Event: X="+ e.getX() +" Y="+ e.getY());
-        System.out.println(glcanvas.getHeight());
-        float newX =  ((float) e.getX() / glcanvas.getWidth())       *  2 - 1;
-        float newY = (((float) e.getY() / glcanvas.getHeight()) - 1) * -2 - 1;
-        polygons.firstElement().addVertex(new Vertex(newX, newY));
+        Vertex point = getCanvasPoint(e.getX(), e.getY());
+        System.out.println("Click Event: X="+ point.getX() +" Y="+ point.getY());
+        
+        switch(currentAction){
+            case "Adicionar":
+                selectedPolygon.addVertex(point);
+                break;
+            case "Selecionar":
+                break;
+        }
+        
         glcanvas.repaint();
     }
 
