@@ -203,6 +203,12 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
                 selectedPolygon.addVertex(point);
                 break;
             case "Selecionar":
+                for(Polygon polygon : polygons){
+                    if(polygon.isIn(point)){
+                        selectedPolygon = polygon;
+                        break;
+                    }
+                }
                 break;
         }
         
