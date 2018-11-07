@@ -169,7 +169,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
             case "Mudar Cor":
                 java.awt.Color color;
                 color = JColorChooser.showDialog(null, "JColorChooser Sample", windows.getBackground());
-                polygons.firstElement().setColor(new Color(color));
+                selectedPolygon.setColor(new Color(color));
                 System.out.println(polygons.firstElement().getColor().toString());
                 break;
             case "Selecionar":
