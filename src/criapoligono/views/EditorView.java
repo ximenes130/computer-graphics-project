@@ -89,16 +89,6 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         toolbar.add(new JButton("Avançar"));
         windows.getContentPane().add(toolbar, BorderLayout.NORTH);
         
-        Polygon p = new Polygon();
-        p.setColor(new Color(0, 1f, 0));
-        p.addVertex(new Vertex(0, 0));
-        p.addVertex(new Vertex(0.5f, 0.2f));
-        p.addVertex(new Vertex(0.5f, -0.5f));
-        p.addVertex(new Vertex(0.2f, -0.2f));
-        p.addVertex(new Vertex(0.2f, -0.7f));
-        this.polygons.add(p);
-        this.selectedPolygon = p;
-        
         // Configurando o frame
         windows.setSize( 800, 600 );
         windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,6 +100,9 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
     public void display(GLAutoDrawable drawable) {
         System.out.println("--- public void display ---");
         final GL2 gl = drawable.getGL().getGL2();
+        
+        gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+        gl.glLoadIdentity();
 
         for(Polygon polygon : polygons){
             polygon.draw(gl, polygon == selectedPolygon);
@@ -124,8 +117,8 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
 
     @Override
     public void init(GLAutoDrawable drawable) {
-      final GL2 gl = drawable.getGL().getGL2();
-      gl.glClearColor(1, 1, 1, 1);
+        final GL2 gl = drawable.getGL().getGL2();
+        gl.glClearColor(1, 1, 1, 1);
     }
 
     @Override

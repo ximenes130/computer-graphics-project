@@ -30,7 +30,7 @@ public class Color {
     }
 
     public Color() {
-        this(1f, 1f, 1f);
+        this(0f, 0f, 0f);
     }
     
     public Color(float red, float green, float blue) {
