@@ -177,6 +177,8 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
                 break;
             case "Adicionar":
                 setCurrentAction("Adicionar");
+                selectedPolygon = new Polygon();
+                polygons.add(selectedPolygon);
                 break;
             case "Transladar":
                 setCurrentAction("Transladar");
