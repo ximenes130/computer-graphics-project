@@ -74,19 +74,16 @@ public class Polygon {
     }
     
     public void move(float x, float y){
-        for(Vertex v : vertexes){
-            v.setX(v.getX() + x);
-            v.setY(v.getY() + y);
-        }
+        Float[][] matrix = Polygon.getMoveMatrix(x, y);
+        
+        // Multiplicando cada vertice do poligono
+        vertexes.forEach((v) -> {
+            v.times(matrix);
+        });
     }
     
     public void resize(float s){
-        // Gerando matriz de transformação
-        Float matrix[][] = {
-            {s+1, 0f,  0f},
-            {0f,  s+1, 0f},
-            {0f,  0f,  1f}
-        };
+        Float[][] matrix = Polygon.getResizeMatrix(s);
         
         // Movendo poligono para a origem antes de redimensionar
         BBox box = getBBox();
@@ -95,33 +92,16 @@ public class Polygon {
         move(-polygonCenterX, -polygonCenterY);
         
         // Multiplicando cada vertice do poligono
-        for(Vertex v : vertexes){
+        vertexes.forEach((v) -> {
             v.times(matrix);
-        }
+        });
         
         // Retornando poligono para a posição original
         move(polygonCenterX, polygonCenterY);
     }
     
     public void rotate(float x1, float y1, float x2, float y2){
-        // Aplicando lei dos cossenos para descobrir o cosseno
-        //   a² = b² + c² - 2 * b * c * cos A
-        float a = (float) Math.sqrt(y1*y1 + Math.pow(x2-x1, 2));
-        float b = (float) Math.sqrt(y1*y1 + Math.pow(x1-x2, 2));
-        float c = x2;
-        float cos = a*a - b*b + c*c / (2 * b * c);
-        
-        // Aplicando lei da relação fundamental para descobrir o seno
-        //   sen²a + cos²a = 1
-        float sin = (float) Math.sqrt(1 - cos*cos);
-        System.out.println("Rotate: sin="+sin+" cos="+cos);
-        
-        // Gerando matriz de transformação
-        Float matrix[][] = {
-            {cos, -sin, 0f},
-            {sin,  cos, 0f},
-            {0f,   0f,  1f}
-        };
+        Float[][] matrix = Polygon.getRotateMatrix(x1, y1, x2, y2);
         
         // Movendo poligono para a origem antes de rotacionar
         BBox box = getBBox();
@@ -130,9 +110,9 @@ public class Polygon {
         move(-polygonCenterX, -polygonCenterY);
         
         // Multiplicando cada vertice do poligono
-        for(Vertex v : vertexes){
+        vertexes.forEach((v) -> {
             v.times(matrix);
-        }
+        });
         
         // Retornando poligono para a posição original
         move(polygonCenterX, polygonCenterY);
@@ -161,5 +141,49 @@ public class Polygon {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+    
+    public static Float[][] getMoveMatrix(float x, float y){
+        // Gerando matriz de transformação
+        Float matrix[][] = {
+            {1f, 0f, 0f},
+            {0f, 1f, 0f},
+            { x,  y, 1f}
+        };
+        
+        return matrix;
+    }
+    
+    public static Float[][] getResizeMatrix(float s){
+        // Gerando matriz de transformação
+        Float matrix[][] = {
+            {s+1, 0f,  0f},
+            {0f,  s+1, 0f},
+            {0f,  0f,  1f}
+        };
+        
+        return matrix;
+    }
+    
+    public static Float[][] getRotateMatrix(float x1, float y1, float x2, float y2){
+        // Aplicando lei dos cossenos para descobrir o cosseno
+        //   a² = b² + c² - 2 * b * c * cos A
+        float a = (float) Math.sqrt(y1*y1 + Math.pow(x2-x1, 2));
+        float b = (float) Math.sqrt(y1*y1 + Math.pow(x1-x2, 2));
+        float c = x2;
+        float cos = a*a - b*b + c*c / (2 * b * c);
+        
+        // Aplicando lei da relação fundamental para descobrir o seno
+        //   sen²a + cos²a = 1
+        float sin = (float) Math.sqrt(1 - cos*cos);
+        
+        // Gerando matriz de transformação
+        Float matrix[][] = {
+            {cos, -sin, 0f},
+            {sin,  cos, 0f},
+            {0f,   0f,  1f}
+        };
+        
+        return matrix;
     }
 }
