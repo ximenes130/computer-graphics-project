@@ -70,7 +70,6 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         JToggleButton addPolygonButton = new JToggleButton("Adicionar");
         addPolygonButton.addActionListener(this);
         toolbar.add(addPolygonButton);
-        toolbar.addSeparator();
         
         JToggleButton delPolygonButton = new JToggleButton("Remover");
         delPolygonButton.addActionListener(this);
@@ -94,8 +93,14 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         toolbar.add(rotatePolygonButton);
         
         toolbar.addSeparator();
-        toolbar.add(new JButton("Voltar"));
-        toolbar.add(new JButton("Avançar"));
+        
+        JButton backButton = new JButton("Voltar");
+        backButton.addActionListener(this);
+        toolbar.add(backButton);
+        
+        JButton nextButton = new JButton("Avançar");
+        nextButton.addActionListener(this);
+        toolbar.add(nextButton);
         windows.getContentPane().add(toolbar, BorderLayout.NORTH);
         
         // Configurando o frame
@@ -198,6 +203,14 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
                 break;
             case "Rotacionar":
                 setCurrentAction("Rotacionar");
+                break;
+            case "Voltar":
+                if(!scenes.isFirst())
+                    selectedPolygon.times(scenes.getPrevious());
+                break;
+            case "Avançar":
+                if(!scenes.isLast())
+                    selectedPolygon.times(scenes.getNext());
                 break;
         }
         glcanvas.repaint();

@@ -26,7 +26,8 @@ public class Scenes extends Vector<Float[][]> {
         }
         
         if(super.add(e)){
-            setPosition(size());
+            setPosition(size() - 1);
+            System.out.println("----- +1 Scene: position="+getPosition());
             return true;
         }
         return false;
@@ -35,7 +36,7 @@ public class Scenes extends Vector<Float[][]> {
     @Override
     public synchronized Float[][] remove(int index){
         Float[][] e = super.remove(index);
-        setPosition(size());
+        setPosition(size() - 1);
         return e;
     }
     
@@ -44,12 +45,18 @@ public class Scenes extends Vector<Float[][]> {
     }
     
     public Float[][] getPrevious(){
+        if((getPosition()-1) < 0)
+            return null;
         setPosition(getPosition() - 1);
+        System.out.println("----- Prev Scene: position="+getPosition());
         return get(position);
     }
     
     public Float[][] getNext(){
-        setPosition(getPosition() - 1);
+        if(getPosition() >= size())
+            return null;
+        setPosition(getPosition() + 1);
+        System.out.println("----- Next Scene: position="+getPosition());
         return get(position);
     }
     

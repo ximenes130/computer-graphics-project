@@ -82,6 +82,12 @@ public class Polygon {
         });
     }
     
+    public void times(Float[][] matrix){
+        vertexes.forEach((v) -> {
+            v.times(matrix);
+        });
+    }
+    
     public void resize(float s){
         Float[][] matrix = Polygon.getResizeMatrix(s);
         
