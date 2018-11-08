@@ -8,6 +8,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import criapoligono.models.Color;
 import criapoligono.models.Polygon;
+import criapoligono.models.Scenes;
 import criapoligono.models.Vertex;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -36,7 +37,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
     private String currentAction;
     private Vertex lastMousePress;
     private Vertex lastMouseDrag;
-    //    private Scenes scenes; // TODO: Estudar melhor 
+    private Scenes scenes;
             
     public EditorView() {
         this.polygons = new Vector<>();
@@ -104,6 +105,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         System.out.println("Janela exibida!");
         
         lastMouseDrag = new Vertex();
+        scenes = new Scenes();
     }
     
     @Override
@@ -230,12 +232,38 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
 
     @Override
     public void mouseReleased(java.awt.event.MouseEvent e) {
+        Vertex point = getCanvasPoint(e.getX(), e.getY());
         switch(currentAction){
             case "Transladar":
+                scenes.add
+                (
+                    Polygon.getMoveMatrix
+                    (
+                        point.getX() - lastMousePress.getX(),
+                        point.getY() - lastMousePress.getY()
+                    )
+                );
                 break;
             case "Redimensionar":
+                scenes.add
+                (
+                    Polygon.getResizeMatrix
+                    (
+                        (point.getX() - lastMousePress.getX() + point.getY() - lastMousePress.getY())/2
+                    )
+                );
                 break;
             case "Rotacionar":
+                scenes.add
+                (
+                    Polygon.getRotateMatrix
+                    (
+                        lastMousePress.getX(),
+                        lastMousePress.getY(),
+                        point.getX(),
+                        point.getY()
+                    )
+                );
                 break;
         }
     }
