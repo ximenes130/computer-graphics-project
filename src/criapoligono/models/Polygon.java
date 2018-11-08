@@ -48,10 +48,10 @@ public class Polygon {
     }
     
     public BBox getBBox(){
-        float minX = 0;
-        float maxX = 0;
-        float minY = 0;
-        float maxY = 0;
+        float minX = vertexes.firstElement().getX();
+        float maxX = vertexes.firstElement().getX();
+        float minY = vertexes.firstElement().getY();
+        float maxY = vertexes.firstElement().getY();
         
         for(Vertex v : vertexes){
             if(v.getX() < minX)
@@ -74,6 +74,13 @@ public class Polygon {
     }
     
     public void move(float x, float y){
+        for(Vertex v : vertexes){
+            v.setX(v.getX() + x);
+            v.setY(v.getY() + y);
+        }
+    }
+    
+    public void resize(float x, float y){
         for(Vertex v : vertexes){
             v.setX(v.getX() + x);
             v.setY(v.getY() + y);
