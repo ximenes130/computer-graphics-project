@@ -34,6 +34,8 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
     private Polygon selectedPolygon;
     private JToolBar toolbar;
     private String currentAction;
+    private Vertex lastMousePress;
+    private Vertex lastMouseDrag;
     //    private Scenes scenes; // TODO: Estudar melhor 
             
     public EditorView() {
@@ -46,6 +48,7 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         glcanvas = new GLCanvas(capabilities);
         glcanvas.addGLEventListener(this);
         glcanvas.addMouseListener(this);
+        glcanvas.addMouseMotionListener(this);
         glcanvas.setSize(100, 100);
 
         // Criando frame (Janela)
@@ -94,6 +97,8 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windows.setVisible(true);
         System.out.println("Janela exibida!");
+        
+        lastMouseDrag = new Vertex();
     }
     
     @Override
@@ -210,10 +215,19 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
 
     @Override
     public void mousePressed(java.awt.event.MouseEvent e) {
+        lastMousePress = getCanvasPoint(e.getX(), e.getY());
     }
 
     @Override
     public void mouseReleased(java.awt.event.MouseEvent e) {
+        switch(currentAction){
+            case "Transladar":
+                break;
+            case "Redimensionar":
+                break;
+            case "Rotacionar":
+                break;
+        }
     }
 
     @Override
@@ -226,6 +240,20 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
 
     @Override
     public void mouseDragged(java.awt.event.MouseEvent e) {
+        Vertex point = getCanvasPoint(e.getX(), e.getY());
+        System.out.println("Mouse dragged: X="+e.getX()+" Y="+e.getY());
+        System.out.println("Drag difference: X="+ (point.getX() - lastMouseDrag.getX()) +" Y="+ (point.getY() - lastMouseDrag.getY()));
+        switch(currentAction){
+            case "Transladar":
+                selectedPolygon.move(point.getX() - lastMouseDrag.getX(), point.getY() - lastMouseDrag.getY());
+                break;
+            case "Redimensionar":
+                break;
+            case "Rotacionar":
+                break;
+        }
+        lastMouseDrag = point;
+        glcanvas.repaint();
     }
 
     @Override

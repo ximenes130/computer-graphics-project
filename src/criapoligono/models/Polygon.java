@@ -73,6 +73,13 @@ public class Polygon {
         return resul;
     }
     
+    public void move(float x, float y){
+        for(Vertex v : vertexes){
+            v.setX(v.getX() + x);
+            v.setY(v.getY() + y);
+        }
+    }
+    
     public Vector<Vertex> addVertex(Vertex vertex){
         return addVertex(vertex, this.vertexes.size());
     }
