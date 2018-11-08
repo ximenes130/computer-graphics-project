@@ -28,10 +28,11 @@ public class Vertex {
     public void times(Float matrix[][]){
        Float result[][] = Matrix.multiply(this.toMatrix(), matrix);
        setAll(result);
+       System.out.println(result);
     }
     
     public Float[] toArray(){
-        Float a[] = {getX(), getY()};
+        Float a[] = {getX(), getY(), 1f};
         return a;
     }
     

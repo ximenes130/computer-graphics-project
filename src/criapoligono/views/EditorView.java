@@ -248,8 +248,10 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
                 selectedPolygon.move(point.getX() - lastMouseDrag.getX(), point.getY() - lastMouseDrag.getY());
                 break;
             case "Redimensionar":
+                selectedPolygon.resize((point.getX() - lastMouseDrag.getX() + point.getY() - lastMouseDrag.getY())/2);
                 break;
             case "Rotacionar":
+                selectedPolygon.rotate(lastMouseDrag.getX(), lastMouseDrag.getY(), point.getX(), point.getY());
                 break;
         }
         lastMouseDrag = point;

@@ -80,10 +80,43 @@ public class Polygon {
         }
     }
     
-    public void resize(float x, float y){
+    public void resize(float s){
+        // Gerando matriz de transformação
+        Float matrix[][] = {
+            {s+1, 0f,  0f},
+            {0f,  s+1, 0f},
+            {0f,  0f,  1f}
+        };
+        
+        // Multiplicando cada vertice do poligono
         for(Vertex v : vertexes){
-            v.setX(v.getX() + x);
-            v.setY(v.getY() + y);
+            v.times(matrix);
+        }
+    }
+    
+    public void rotate(float x1, float y1, float x2, float y2){
+        // Aplicando lei dos cossenos para descobrir o cosseno
+        //   a² = b² + c² - 2 * b * c * cos A
+        float a = (float) Math.sqrt(y1*y1 + Math.pow(x2-x1, 2));
+        float b = (float) Math.sqrt(y1*y1 + Math.pow(x1-x2, 2));
+        float c = x2;
+        float cos = a*a - b*b + c*c / (2 * b * c);
+        
+        // Aplicando lei da relação fundamental para descobrir o seno
+        //   sen²a + cos²a = 1
+        float sin = (float) Math.sqrt(1 - cos*cos);
+        System.out.println("Rotate: sin="+sin+" cos="+cos);
+        
+        // Gerando matriz de transformação
+        Float matrix[][] = {
+            {cos, -sin, 0f},
+            {sin,  cos, 0f},
+            {0f,   0f,  1f}
+        };
+        
+        // Multiplicando cada vertice do poligono
+        for(Vertex v : vertexes){
+            v.times(matrix);
         }
     }
     
