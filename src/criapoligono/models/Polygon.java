@@ -88,10 +88,19 @@ public class Polygon {
             {0f,  0f,  1f}
         };
         
+        // Movendo poligono para a origem antes de redimensionar
+        BBox box = getBBox();
+        Float polygonCenterX = (box.getMinX() + box.getMaxX()) / 2;
+        Float polygonCenterY = (box.getMinY() + box.getMaxY()) / 2;
+        move(-polygonCenterX, -polygonCenterY);
+        
         // Multiplicando cada vertice do poligono
         for(Vertex v : vertexes){
             v.times(matrix);
         }
+        
+        // Retornando poligono para a posição original
+        move(polygonCenterX, polygonCenterY);
     }
     
     public void rotate(float x1, float y1, float x2, float y2){
@@ -114,10 +123,19 @@ public class Polygon {
             {0f,   0f,  1f}
         };
         
+        // Movendo poligono para a origem antes de rotacionar
+        BBox box = getBBox();
+        Float polygonCenterX = (box.getMinX() + box.getMaxX()) / 2;
+        Float polygonCenterY = (box.getMinY() + box.getMaxY()) / 2;
+        move(-polygonCenterX, -polygonCenterY);
+        
         // Multiplicando cada vertice do poligono
         for(Vertex v : vertexes){
             v.times(matrix);
         }
+        
+        // Retornando poligono para a posição original
+        move(polygonCenterX, polygonCenterY);
     }
     
     public Vector<Vertex> addVertex(Vertex vertex){
