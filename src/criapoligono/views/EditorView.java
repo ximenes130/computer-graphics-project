@@ -71,6 +71,11 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
         toolbar.add(addPolygonButton);
         toolbar.addSeparator();
         
+        JToggleButton delPolygonButton = new JToggleButton("Remover");
+        delPolygonButton.addActionListener(this);
+        toolbar.add(delPolygonButton);
+        toolbar.addSeparator();
+        
         JButton changeColorButton = new JButton("Mudar Cor");
         changeColorButton.addActionListener(this);
         toolbar.add(changeColorButton);
@@ -177,6 +182,11 @@ public class EditorView implements GLEventListener, MouseInputListener, ActionLi
                 setCurrentAction("Adicionar");
                 selectedPolygon = new Polygon();
                 polygons.add(selectedPolygon);
+                break;
+            case "Remover":
+                setCurrentAction("Remover");
+                polygons.remove(selectedPolygon);
+                selectedPolygon = null;
                 break;
             case "Transladar":
                 setCurrentAction("Transladar");
